@@ -1,76 +1,96 @@
-class Node {
-    constructor(text) {
-      this.text = text;
-    }
+class Queue {
+  constructor() {
+    this.items = [];
+  }
+
+  enqueue(data) {
+    this.items.push(data);
+  }
+
+  dequeue() {
+    return this.items.shift();
+  }
+
+  isEmpty() {
+    return this.items.length === 0;
+  }
+
+  get front() {
+    return this.items[0];
+  }
+
+  get rear() {
+    return this.items[this.items.length - 1];
+  }
 }
 
-function removeDuplicateWords(string) {
-    let arr = string.split(' ')
-    let newArr = " "
-    for (let i = 0; i < arr.length; i++){
-        newArr = arr[i]
-        if (arr.includes(newArr)){
-            return true
-        } else {
-            return false
-        }
-       
-    }
-    return newArr
+class Stack {
+  constructor() {
+    this.nodes = [];
+  }
+
+  add(data) {
+    this.nodes.push(data);
+  }
+
+  remove() {
+    return this.nodes.pop();
+  }
+
+  isEmpty() {
+    return this.nodes.length === 0;
+  }
+
+  get top() {
+    return this.nodes[this.nodes.length - 1];
+  }
+
+  unload() {
+    return this.nodes;
+  }
 }
 
+function destroyConsecutiveWords(sentence) {
+  const setenceArray = sentence.split(" ");
+  const s1 = new Stack();
+  const q2 = new Queue();
+  for (const word of setenceArray) {
+    q2.enqueue(word);
+  }
+  while (!q2.isEmpty()) {
+    if (s1.top === q2.front) {
+      s1.remove();
+      q2.dequeue();
+    } else {
+      s1.add(q2.dequeue());
+    }
+  }
+  return s1.nodes.join(" ");
+}
 
-// const nn = new Node("sun moon moon sun");
-// console.log(nn.removeDuplicateWords());
-
-  
-
-console.log(removeDuplicateWords('sun moon moon sun'));
-console.log(removeDuplicateWords('apple apple banana pear banana'));
-console.log(removeDuplicateWords('a a a apple banana banana pineapple'));
-  
-
-
-
-
-
-
-  
-
-// function characters( string ){
-//     let unique='';
-//     for(let i=0; i<string.length; i++){
-//         if(unique.indexOf(string[i])==-1){
-//             unique += string[i];
-//         }
-//     }
-//     return unique;
-// }
-// console.log(characters('sun moon moon sun'));
-// console.log(characters('apple apple banana pear banana'));
-// console.log(characters('a a a apple banana banana pineapple'));
+console.log(destroyConsecutiveWords("a b b a")); // ""
+console.log(destroyConsecutiveWords("a b b a c")); // "c"
+console.log(destroyConsecutiveWords("apple banana apple banana banana apple")); // "apple banana"
 
 
 
-
-// function removeDuplicateWords (string) {
+// function removeDuplicateWords(string) {
+//     const stack = new Node();
 //     let arr = string.split(' ')
-//     let finalStr = ''
-//     for(let i = 0; i < arr.length; i++){
-//         if(string.indexOf(finalStr[i])==-1){
-//             finalStr += arr[i];
+//     // let newArr = " "
+//     for (let i = 0; i < arr.length; i++){
+//         if (arr[i] !== arr[i+1]){}
+//           stack.add(arr[i])
 //         }
-//     }
+    
+//     return arr
+// }
 
-//       for ( let i = 0; i < arr.length; i++) {
-//            let elem = arr[i]
-//            if ( elem !== arr[i-1]){
-//              finalStr += elem + ' '
-//            } 
-           
-//          // check every element next to one and we will see how it works
-          
-//       }
-//          return finalStr.trim('') // we have an extra space in the end and we need to remove it 
-//          return finalStr
-//   }
+
+
+  
+
+// console.log(removeDuplicateWords('sun moon moon sun'));
+// console.log(removeDuplicateWords('apple apple banana pear banana'));
+// console.log(removeDuplicateWords('a a a apple banana banana pineapple'));
+  
